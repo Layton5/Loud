@@ -11,9 +11,9 @@ let generateShop = () => {
         <img width="220" src="${img}" alt="" />
         <div class="details">
           <h3>${name}</h3>
-          <p>Goes well on native</p>
+          <p>${desc}</p>
           <div  class="price-quantity">
-            <h2>₦ ${price}</h2>
+            <h2>₦ ${Number(price).toLocaleString()}</h2>
             <div class="buttons">
               <i onclick="decrement(${id})" class="bi bi-dash-lg"></i>
               <div id=${id} class="quantity">${
@@ -39,7 +39,7 @@ let increment = (id) => {
       item: 1,
     });
   } else {
-    search.item += 1;
+    search.item = +1;
   }
   localStorage.setItem("data", JSON.stringify(basket));
   update(selectedItem.id);

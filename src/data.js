@@ -3,14 +3,14 @@ let shopItemsData = [
     id: "A",
     name: "Casual Slide",
     price: "10000",
-    desc: "Goes well on Native",
+    desc: "Goes well ",
     img: "images/palm1.jfif",
   },
   {
     id: "B",
     name: "Birken-stock",
     price: "8000",
-    desc: "Goes well on Native",
+    desc: "Nice for the feet",
     img: "images/palm1.jfif",
   },
   {

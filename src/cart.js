@@ -26,7 +26,7 @@ let generateCartItems = () => {
         <div class="title-price-x">
         <h4 class ="title-price">
         <p>${search.name}</p>
-         <p class='price'>₦${search.price}</p>
+         <p class='price'>₦${Number(price).toLocaleString()}</p>
         </h4>
         <i onclick="removeItem(${id})" class="bi bi-x-lg"></i>
         </div>
@@ -35,7 +35,7 @@ let generateCartItems = () => {
               <div id=${id} class="quantity">${item}</div>
               <i onclick="increment(${id})" class="bi bi-plus-lg"></i>
             </div>
-            <h3>₦ ${item * search.price}</h3>
+            <h3>₦ ${Number(item * price).toLocaleString()}</h3>
 </div>
   
         </div>`;
@@ -112,8 +112,8 @@ let TotalAmount = () => {
       })
       .reduce((x, y) => x + y, 0);
     label.innerHTML = `
-   <h2>Total Bill:₦${amount}</h2>
-   <button class="checkout">Checkout</button>
+   <h2>Total Bill:₦${Number(amount).toLocaleString()}</h2>
+  <button class="checkout" onclick='handleCheckout(${+amount})'>Checkout</button>
    <button onclick="clearCart()"  class="removeall">Clear Bag</button>`;
   } else return;
 };
@@ -124,4 +124,29 @@ let clearCart = () => {
   generateCartItems();
   calculation();
   localStorage.setItem("data", JSON.stringify(basket));
+};
+
+const handleCheckout = (amount) => {
+  const data = JSON.stringify({
+    email: "customer@email.com",
+    amount: amount * 100,
+  });
+  const url = "https://api.paystack.co/transaction/initialize";
+  const options = {
+    method: "POST",
+    body: data,
+    headers: {
+      Authorization: "Bearer sk_test_e698252eb396895eed88e8d1bf38bd1de303b371",
+      "Content-Type": "application/json",
+    },
+  };
+
+  fetch(url, options)
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data);
+      window.open(data.data.authorization_url);
+    });
 };
